@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "*.tcc": "cpp",
+        "complex": "cpp",
+        "random": "cpp",
+        "future": "cpp",
+        "limits": "cpp",
+        "functional": "cpp",
+        "regex": "cpp",
+        "tuple": "cpp",
+        "type_traits": "cpp"
+    }
+}
