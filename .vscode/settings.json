@@ -8,6 +8,7 @@
         "functional": "cpp",
         "regex": "cpp",
         "tuple": "cpp",
-        "type_traits": "cpp"
+        "type_traits": "cpp",
+        "iostream": "cpp"
     }
 }
