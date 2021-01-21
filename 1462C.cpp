@@ -18,6 +18,8 @@ inline int read()
 }
 int main()
 {
+    vector<int> v;
+    v.push
     T=read();
     while(T--)
     {
