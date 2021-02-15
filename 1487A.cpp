@@ -1,8 +1,9 @@
 #include <bits/stdc++.h>
 #define INF 2147483647
-#define int long long
+#define LL long long
 #define N 100005
 using namespace std;
+int n, a[N];
 inline int read()
 {
 	int X = 0, w = 0;
@@ -15,16 +16,20 @@ inline int read()
 	while (isdigit(ch)) X = (X << 3) + (X << 1) + (ch ^ 48), ch = getchar();
 	return w ? -X : X;
 }
-signed main()
+int main()
 {
-	int T=read();
-	while(T--)
+	int T = read();
+	while (T--)
 	{
-		int x=read(),y=read();
-		int ans=0;
-		for(int i = 1; i*i<=x; i++)
-			ans+=max(min(y,x/i-1)-i,(int)0);
-		printf("%lld\n", ans);
+		n = read();
+		for (int i = 1; i <= n; i++)
+			a[i] = read();
+		sort(a + 1, a + n + 1);
+		int i = 1;
+		while (a[i] == a[1])
+			i++;
+		i--;
+		printf("%d\n", n - i);
 	}
 	return 0;
 }

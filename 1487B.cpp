@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 #define INF 2147483647
-#define int long long
+#define LL long long
 #define N 100005
 using namespace std;
 inline int read()
@@ -15,16 +15,30 @@ inline int read()
 	while (isdigit(ch)) X = (X << 3) + (X << 1) + (ch ^ 48), ch = getchar();
 	return w ? -X : X;
 }
-signed main()
+int main()
 {
 	int T=read();
 	while(T--)
 	{
-		int x=read(),y=read();
-		int ans=0;
-		for(int i = 1; i*i<=x; i++)
-			ans+=max(min(y,x/i-1)-i,(int)0);
-		printf("%lld\n", ans);
+		int n=read(),k=read();
+		if(n%2==0)
+		{
+			if(k%n==0)printf("%d\n", n);
+				else printf("%d\n", k%n);
+		}
+		else
+		{
+			int x=n/2;
+			int y=x+1;
+			int zu=k/x;
+			int djg=k%x;
+			if(djg==0)djg=x;
+			else zu++;
+			int ans=(djg+(zu-1)*y)%n;
+			if(ans==0)ans=n;
+			printf("%d\n", ans);
+		}
+
 	}
 	return 0;
 }
