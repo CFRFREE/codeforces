@@ -3,7 +3,6 @@
 #define LL long long
 #define N 100005
 using namespace std;
-int n, a[N];
 inline int read()
 {
 	int X = 0, w = 0;
@@ -18,18 +17,11 @@ inline int read()
 }
 int main()
 {
-	int T = read();
-	while (T--)
+	int s=read(),t=read();
+	cin>>st1>>st2;
+	for(int i=0;i<n;i++)
 	{
-		n = read();
-		for (int i = 1; i <= n; i++)
-			a[i] = read();
-		sort(a + 1, a + n + 1);
-		int i = 1;
-		while (a[i] == a[1]&&i<=n)
-			i++;
-		i--;
-		printf("%d\n", n - i);
+		
 	}
 	return 0;
 }
