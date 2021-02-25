@@ -39,9 +39,9 @@ int main()
 	while (T--)
 	{
 		n = read();
-		memset(st, 0, sizeof(st));
-		memset(id, 0, sizeof(id));
-		memset(a, 0, sizeof(a));
+		//memset(st, 0, sizeof(st));
+		//memset(id, 0, sizeof(id));
+		//memset(a, 0, sizeof(a));
 		for (int i = 1; i <= n; i++)
 		{
 			a[i] = st[i][0] = read();
