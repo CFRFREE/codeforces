@@ -1,11 +1,9 @@
 #include <bits/stdc++.h>
 #define INF 2147483647
-#define LL long long
-#define N 400005
+#define int long long
+#define N 200005
 using namespace std;
-int T, n, a, b, k, boy[N], girl[N];
-vector<int> bf[N],gf[N];
-LL ans;
+int a[N],b[N],boy[N],girl[N];
 inline int read()
 {
 	int X = 0, w = 0;
@@ -18,35 +16,30 @@ inline int read()
 	while (isdigit(ch)) X = (X << 3) + (X << 1) + (ch ^ 48), ch = getchar();
 	return w ? -X : X;
 }
-int main()
+signed main()
 {
-	T = read();
+	int T = read();
 	while (T--)
 	{
-		a = read(), b = read(), k = read();
-		for (int i = 1; i <= a; i++)
+		int qaq = read(), free = read(), k = read();
+		memset(a, 0, sizeof(a));
+		memset(b, 0, sizeof(b));
+		int ans = 0;
+		for (int i = 1; i <= k; i++)
 		{
-			boy[i] = read();
+			int x = read();
+			boy[i] = x;
+			a[x]++;
 		}
-		for (int i = 1; i <= b; i++)
+		for (int i = 1; i <= k; i++)
 		{
-			girl[i] = read();
-			gf[boy[i]].push_back(girl[i]);
-			bf[girl[i]].push_back(boy[i]);
+			int y = read();
+			girl[i] = y;
+			b[y]++;
 		}
-		for (int i = 1; i <= a; i++)
-		{
-			LL s = 0;
-			for (int j = 0; j < gf[i].size(); j++)
-				s += bf[ gf[i][j] ].size();
-			ans += gf[i].size() * (k - s - 1);
-		}
-		printf("%lld\n", ans);
-		for (int i = 1; i <= a; i++)
-			gf[i].clear();
-		for (int i = 1; i <= b; i++)
-			bf[i].clear();
-		ans = 0;
+		for (int i = 1; i <= k; i++)
+			ans += (k - a[boy[i]] - b[girl[i]] + 1);
+		printf("%lld\n", ans/2);
 	}
 	return 0;
 }
