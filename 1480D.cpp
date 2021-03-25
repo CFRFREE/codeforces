@@ -3,9 +3,7 @@
 #define LL long long
 #define N 100005
 using namespace std;
-int a[N];
-vector<int>ans1, ans2, id1, id2;
-queue<int>q[N];
+int a[N], Next[N], pos[N], ans;
 inline int read()
 {
 	int X = 0, w = 0;
@@ -18,58 +16,44 @@ inline int read()
 	while (isdigit(ch)) X = (X << 3) + (X << 1) + (ch ^ 48), ch = getchar();
 	return w ? -X : X;
 }
-
 int main()
 {
 	int n = read();
 	for (int i = 1; i <= n; i++)
-	{
 		a[i] = read();
-		q[a[i]].push(i);
+	for (int i = 0; i <= n; i++)
+		pos[i] = n + 1;
+	for (int i = n; i >= 0; i--)
+	{
+		Next[i] = pos[a[i]];
+		pos[a[i]] = i;
 	}
-	ans1.push_back(0);
-	id1.push_back(0);
-	ans2.push_back(0);
-	id2.push_back(0);
+	int x = 0;
+	int y = 0;
 	for (int i = 1; i <= n; i++)
 	{
-		int x = ans1.back();
-		int y = ans2.back();
 		int z = a[i];
-		if (x == z)
+		if (a[x] == z)
 		{
-			ans2.push_back(z);
-			id2.push_back(i);
+			ans += (z != a[y]);
+			y = i;
 		}
-		else if (y == z)
+		else if (a[y] == z)
 		{
-			ans1.push_back(z);
-			id1.push_back(i);
+			ans += (z != a[x]);
+			x = i;
+		}
+		else if (Next[x] < Next[y])
+		{
+			ans += (z != a[x]);
+			x = i;
 		}
 		else
 		{
-			while (q[x].front() != id1.back())
-				q[x].pop();
-			q[x].pop();
-			int next1 = q[x].front();
-			while (q[y].front() != id1.back())
-				q[y].pop();
-			q[y].pop();
-			int next2 = q[y].front();
-			if (next1 < next2)
-			{
-				ans1.push_back(z);
-				id1.push_back(i);
-			}
-			else
-			{
-				ans2.push_back(z);
-				id2.push_back(i);
-			}
+			ans += (z != a[y]);
+			y = i;
 		}
 	}
-	int n1 = unique(ans1.begin(), ans1.end()) - ans1.begin();
-	int n2 = unique(ans2.begin(), ans2.end()) - ans2.begin();
-	printf("%d\n", n1 + n2 - 2);
+	printf("%d\n", ans);
 	return 0;
 }
