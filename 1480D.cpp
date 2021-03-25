@@ -48,12 +48,14 @@ int main()
 		}
 		else
 		{
-			while (q[x].top() != id1.back())
+			while (q[x].front() != id1.back())
 				q[x].pop();
-			int next1 = q[x].top();
-			while (q[y].top() != id1.back())
+			q[x].pop();
+			int next1 = q[x].front();
+			while (q[y].front() != id1.back())
 				q[y].pop();
-			int next2 = q[y].top();
+			q[y].pop();
+			int next2 = q[y].front();
 			if (next1 < next2)
 			{
 				ans1.push_back(z);
