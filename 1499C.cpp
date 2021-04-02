@@ -1,64 +1,66 @@
 #include <bits/stdc++.h>
 #define P 1000000007
-#define INF 2147483647
+#define INF 8223372036854775807
 #define INFF 9223372036854775807
-#define int long long
-#define N 100005
+#define int unsigned long long
+#define N 200005
 using namespace std;
 int a[N], b[N];
-inline int read()
-{
-	int X = 0, w = 0;
-	char ch = 0;
-	while (!isdigit(ch))
-	{
-		w |= ch == '-';
-		ch = getchar();
-	}
-	while (isdigit(ch)) X = (X << 3) + (X << 1) + (ch ^ 48), ch = getchar();
-	return w ? -X : X;
-}
+int suma[N], sumb[N];
 signed main()
 {
-	int T = read();
+	int T;
+	scanf("%lld", &T);
 	while (T--)
 	{
-		int n = read();
+		int n;
+		scanf("%lld", &n);
 		int mina = INF;
 		int minb = INF;
-		int ans = 0;
+		int ans = INF;
+		memset(suma, 0, sizeof(suma));
+		memset(sumb, 0, sizeof(sumb));
 		for (int i = 1; i <= n; i++)
 		{
 			if (i % 2 == 1)
 			{
-				int x = read();
+				int x;
+				scanf("%lld", &x);
 				a[(i + 1) / 2] = x;
-				mina = min(mina, x);
 			}
 			else
 			{
-				int x = read();
+				int x;
+				scanf("%lld", &x);
 				b[(i + 1) / 2] = x;
-				minb = min(minb, x);
 			}
 		}
 		for (int i = 1; i <= (n + 1) / 2; i++)
-			if (a[i] != mina)
-				ans += a[i];
-			else
-			{
-				ans += (n + 1 - i) * mina;
-				break;
-			}
+			suma[i] = suma[i - 1] + a[i];
 		for (int i = 1; i <= n - (n + 1) / 2; i++)
-			if (b[i] != minb)
-				ans += b[i];
+			sumb[i] = sumb[i - 1] + b[i];
+		for (int i = 1; i <= n; i++)
+		{
+			if (i % 2)
+			{
+				if (a[(i + 1) / 2] < mina)mina = a[(i + 1) / 2];
+				int stepa = (i + 1) / 2;
+				int stepb = i / 2;
+				int ans_now = sumb[stepb] + minb * (n -stepb) + suma[stepa] + mina * (n - stepa);
+				ans = min(ans, ans_now);
+			}
 			else
 			{
-				ans += (n + 1 - i) * minb;
-				break;
+				if (b[i / 2] < minb)minb = b[i / 2];
+				int stepa = i / 2;
+				int stepb = i / 2;
+				int ans_now = sumb[stepb] + minb * (n - stepb) + suma[stepa] + mina * (n -stepa);
+				ans = min(ans, ans_now);
 			}
+		}
 		printf("%lld\n", ans);
 	}
 	return 0;
 }
+// 4 2 4
+//3 1
