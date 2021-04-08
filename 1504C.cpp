@@ -5,7 +5,6 @@
 #define LL long long
 #define N 200005
 using namespace std;
-int a[N];
 inline int read()
 {
 	int X = 0, w = 0;
@@ -24,78 +23,52 @@ int main()
 	while (T--)
 	{
 		int n = read();
-		int sum = 0;
-		string st, ans1, ans2;
-		memset(a,0,sizeof(a));
+		string st;
 		cin >> st;
-		for (int i = 1; i <= n; i++)
-			if (st[i - 1] == '0')
-				a[i] = 0;
-			else
-				a[i] = 1, sum++;
-		if (n % 2 || a[1]*a[n] == 0)
+		vector <int> v;
+		v.clear();
+		for (int i = 0; i < n; i++)
+			if (st[i] == '1')v.push_back(i);
+		if (st[0] == '0' || st[n - 1] == '0' || v.size() % 2)
 			printf("NO\n");
 		else
 		{
-			ans1 = ans2 = '(';
-			int sum1 = 1;
-			int sum2 = 1;
-			int p = 0;
-			for (int i = 2; i <= n; i++)
-			{
-				if (a[i] && a[i + 1])
+			string ans1 = st, ans2 = st;
+			for (int i = 0; i < v.size() / 2; i++)
+				ans1[v[i]] = ans2[v[i]] = '(';
+			for (int i = v.size() / 2; i < v.size(); i++)
+				ans1[v[i]] = ans2[v[i]] = ')';
+			int sum1 = 0;
+			int sum2 = 0;
+			for (int i = 0; i < n; i++)
+				if (st[i] == '0')
 				{
-					ans1 += "()";
-					ans2 += "()";
-					i = i + 1;
-				}
-				else if (a[i])
-				{
-					if (sum1 > 0 && sum2 > 0)
+					if (sum1 <= 0)
 					{
-						sum1--;
+						sum1++;
 						sum2--;
-						ans1 += ')';
-						ans2 += ')';
+						ans1[i] = '(';
+						ans2[i] = ')';
 					}
 					else
 					{
-						sum1++;
+						sum1--;
 						sum2++;
-						ans1 += '(';
-						ans2 += '(';
+						ans1[i] = ')';
+						ans2[i] = '(';
 					}
 				}
 				else
 				{
-					if (sum1 <= 0 && sum2 <= 0)
-					{
-						p = 1;
-						break;
-					}
-					else if (sum1 == 0)
-					{
+					if (ans1[i] == '(')
 						sum1++;
-						sum2--;
-						ans1 += '(';
-						ans2 += ')';
-					}
-					else
-					{
-						sum1--;
+					else sum1--;
+					if (ans2[i] == '(')
 						sum2++;
-						ans1 += ')';
-						ans2 += '(';
-					}
+					else sum2--;
 				}
-			}
-			if (p || sum1 != 0 || sum2 != 0)
-				printf("NO\n");
-			else
-			{
-				printf("YES\n");
-				cout << ans1 << endl << ans2 << endl;
-			}
+			printf("YES\n");
+			cout << ans1 << endl << ans2 << endl;
 		}
 	}
 	return 0;
