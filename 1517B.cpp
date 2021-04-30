@@ -52,7 +52,14 @@ int main()
 				if (M[a[i][j]] >= 1)
 				{
 					if (p)
-						swap(a[i][j], a[i][j + 1]);
+					{
+						for (int k = m; k >= 1; k--)
+							if (M[a[i][k]] < 1)
+							{
+								swap(a[i][k], a[i][j]);
+								break;
+							}
+					}
 					else
 					{
 						M[a[i][j]]--;

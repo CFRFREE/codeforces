@@ -2,7 +2,7 @@
 #define P 1000000007
 #define INF 2147483647
 #define INFF 9223372036854775807
-#define LL long long
+#define int long long
 #define N 100005
 using namespace std;
 inline int read()
@@ -17,8 +17,17 @@ inline int read()
 	while (isdigit(ch)) X = (X << 3) + (X << 1) + (ch ^ 48), ch = getchar();
 	return w ? -X : X;
 }
-int main()
+signed main()
 {
-
+	int T = read();
+	while (T--)
+	{
+		int a = read(), b = read(), d = read();
+		if (a > b)swap(a, b);
+		if ((int)b - a > (int)d * a)
+			printf("NO\n");
+		else
+			printf("YES\n");
+	}
 	return 0;
 }

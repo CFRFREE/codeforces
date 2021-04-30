@@ -19,6 +19,6 @@ inline int read()
 }
 int main()
 {
-
+	int
 	return 0;
 }
