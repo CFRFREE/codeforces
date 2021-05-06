@@ -3,12 +3,11 @@
 #define INF 2147483647
 #define INFF 9223372036854775807
 #define int long long
-#define N 205
+#define N 105
 using namespace std;
-int a[N][N];
-set<int >s;
-vector<int> tot;
-map<int, int>M;
+map<int, int >M;
+vector<int>tot;
+int a[N][N], vis[N];
 inline int read()
 {
 	int X = 0, w = 0;
@@ -27,34 +26,33 @@ signed main()
 	while (T--)
 	{
 		int n = read(), m = read();
-		s.clear();
-		tot.clear();
 		for (int i = 1; i <= n; i++)
-		{
 			for (int j = 1; j <= m; j++)
 			{
 				a[i][j] = read();
 				tot.push_back(a[i][j]);
 			}
-		}
 		sort(tot.begin(), tot.end());
 		for (int i = 0; i < m; i++)
 			M[tot[i]]++;
-		for (int j = 1; j <= m; j++)
-			if (M[a[1][j]])
-				M[a[1][j]]--;
-			else
-				s.insert(j);
-		for (int i = 2; i <= n; i++)
+		tot.clear();
+		memset(vis, 0, sizeof(vis));
+		for (int i = 1; i <= n; i++)
 		{
 			for (int j = 1; j <= m; j++)
-				if (M[a[i][j]] && s.size())
+			{
+				if (M[a[i][j]])
 				{
-					int x = *s.begin();
-					s.erase(x);
-					swap(a[i][j], a[i][x]);
-					M[a[i][j]]--;
+					for (int k = 1; k <= m; k++)
+						if (!vis[k])
+						{
+							vis[k] = 1;
+							M[a[i][j]]--;
+							swap(a[i][j], a[i][k]);
+							break;
+						}
 				}
+			}
 		}
 		for (int i = 1; i <= n; i++)
 		{
@@ -62,6 +60,7 @@ signed main()
 				printf("%lld ", a[i][j]);
 			printf("\n");
 		}
+		M.clear();
 	}
 	return 0;
 }

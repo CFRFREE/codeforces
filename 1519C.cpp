@@ -3,48 +3,59 @@
 #define INF 2147483647
 #define INFF 9223372036854775807
 #define LL long long
-#define N 200005
+#define N 200001
 using namespace std;
+int id[N];
 LL ans[N];
-LL id[N];
 vector<LL>v[N];
-int cmp(LL x, LL y)
+set<int >s;
+inline int read()
 {
-	return x >= y;
+	int X = 0, w = 0;
+	char ch = 0;
+	while (!isdigit(ch))
+	{
+		w |= ch == '-';
+		ch = getchar();
+	}
+	while (isdigit(ch)) X = (X << 3) + (X << 1) + (ch ^ 48), ch = getchar();
+	return w ? -X : X;
+}
+inline int cmp(int x, int y)
+{
+	return x > y;
 }
 int main()
 {
-	int T;
-	scanf("%d", &T);
+	int T = read();
 	while (T--)
 	{
-		int n;
-		scanf("%d", &n);
-		for (int i = 1; i <= n; i++)
-			scanf("%d", &id[i]);
+		int n = read();
+		s.clear();
+		memset(ans, 0, sizeof(ans));
 		for (register int i = 1; i <= n; i++)
 		{
-			LL x;
-			scanf("%lld", &x);
+			id[i] = read();
+			s.insert(id[i]);
+		}
+		for (register int i = 1; i <= n; i++)
+		{
+			LL x = read();
 			v[id[i]].push_back(x);
 		}
-
-		for (register int i = 1; i <= n; i++)
+		for (int x = 1; x <= n; x++)
 		{
-			sort(v[i].begin(), v[i].end(), cmp);
-			for (register int j = 1; j < v[i].size(); j++)
-				v[i][j] += v[i][j - 1];
-			int m = v[i].size();
-			for (register int j = 1; j <= m; j++)
-				ans[j] += v[i][m - (m % j) - 1];
+			sort(v[x].begin(), v[x].end(), cmp);
+			int m = v[x].size();
+			for (register int i = 1; i < m; i++)
+				v[x][i] += v[x][i - 1];
+			for (register int i = 1; i <= m; i++)
+				ans[i] += v[x][m - m % i - 1];
+			v[x].clear();
 		}
 		for (register int i = 1; i <= n; i++)
-		{
 			printf("%lld ", ans[i]);
-			v[i].clear();
-		}
 		printf("\n");
-		memset(ans, 0, sizeof(ans));
 	}
 	return 0;
 }
