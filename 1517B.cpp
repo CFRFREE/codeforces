@@ -2,12 +2,13 @@
 #define P 1000000007
 #define INF 2147483647
 #define INFF 9223372036854775807
-#define LL long long
+#define int long long
 #define N 205
 using namespace std;
 int a[N][N];
+set<int >s;
+vector<int> tot;
 map<int, int>M;
-vector<int>tot;
 inline int read()
 {
 	int X = 0, w = 0;
@@ -20,15 +21,14 @@ inline int read()
 	while (isdigit(ch)) X = (X << 3) + (X << 1) + (ch ^ 48), ch = getchar();
 	return w ? -X : X;
 }
-int main()
+signed main()
 {
 	int T = read();
 	while (T--)
 	{
 		int n = read(), m = read();
-		memset(a, 0, sizeof(a));
+		s.clear();
 		tot.clear();
-		M.clear();
 		for (int i = 1; i <= n; i++)
 		{
 			for (int j = 1; j <= m; j++)
@@ -36,45 +36,32 @@ int main()
 				a[i][j] = read();
 				tot.push_back(a[i][j]);
 			}
-			a[i][m + 1] = a[i][m];
 		}
 		sort(tot.begin(), tot.end());
 		for (int i = 0; i < m; i++)
-		{
-			M[tot[i]] ++;
-			//printf("%d\n", tot[i]);
-		}
+			M[tot[i]]++;
 		for (int j = 1; j <= m; j++)
+			if (M[a[1][j]])
+				M[a[1][j]]--;
+			else
+				s.insert(j);
+		for (int i = 2; i <= n; i++)
 		{
-			int p = 0;
-			for (int i = 1; i <= n; i++)
-			{
-				if (M[a[i][j]] >= 1)
+			for (int j = 1; j <= m; j++)
+				if (M[a[i][j]] && s.size())
 				{
-					if (p)
-					{
-						for (int k = m; k >= 1; k--)
-							if (M[a[i][k]] < 1)
-							{
-								swap(a[i][k], a[i][j]);
-								break;
-							}
-					}
-					else
-					{
-						M[a[i][j]]--;
-						p = 1;
-					}
+					int x = *s.begin();
+					s.erase(x);
+					swap(a[i][j], a[i][x]);
+					M[a[i][j]]--;
 				}
-			}
 		}
 		for (int i = 1; i <= n; i++)
 		{
 			for (int j = 1; j <= m; j++)
-				printf("%d ", a[i][j]);
+				printf("%lld ", a[i][j]);
 			printf("\n");
 		}
-
 	}
 	return 0;
 }

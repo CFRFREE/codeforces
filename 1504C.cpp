@@ -3,7 +3,7 @@
 #define INF 2147483647
 #define INFF 9223372036854775807
 #define LL long long
-#define N 200005
+#define N 100005
 using namespace std;
 inline int read()
 {
@@ -25,51 +25,49 @@ int main()
 		int n = read();
 		string st;
 		cin >> st;
-		vector <int> v;
-		v.clear();
-		for (int i = 0; i < n; i++)
-			if (st[i] == '1')v.push_back(i);
-		if (st[0] == '0' || st[n - 1] == '0' || v.size() % 2)
-			printf("NO\n");
-		else
+		string st1 = st;
+		string st2 = st;
+		int sum1 = 0;
+		int sum0 = 0;
+		for (auto ch : st)
+			if (ch == '0')
+				sum0++;
+			else
+				sum1++;
+		if (st[0] == '0' || st[n - 1] == '0' || n % 2 || sum1 % 2)
 		{
-			string ans1 = st, ans2 = st;
-			for (int i = 0; i < v.size() / 2; i++)
-				ans1[v[i]] = ans2[v[i]] = '(';
-			for (int i = v.size() / 2; i < v.size(); i++)
-				ans1[v[i]] = ans2[v[i]] = ')';
-			int sum1 = 0;
-			int sum2 = 0;
-			for (int i = 0; i < n; i++)
-				if (st[i] == '0')
+			printf("NO\n");
+			continue;
+		}
+		printf("YES\n");
+		int cnt1 = 0;
+		int cnt0 = 0;
+		for (int i = 0; i < n; i++)
+		{
+			if (st[i] == '1')
+			{
+				cnt1++;
+				if (cnt1 <= sum1 / 2)
+					st1[i] = st2[i] = '(';
+				else
+					st1[i] = st2[i] = ')';
+			}
+			else
+			{
+				cnt0++;
+				if (cnt0 % 2)
 				{
-					if (sum1 <= 0)
-					{
-						sum1++;
-						sum2--;
-						ans1[i] = '(';
-						ans2[i] = ')';
-					}
-					else
-					{
-						sum1--;
-						sum2++;
-						ans1[i] = ')';
-						ans2[i] = '(';
-					}
+					st1[i] = ')';
+					st2[i] = '(';
 				}
 				else
 				{
-					if (ans1[i] == '(')
-						sum1++;
-					else sum1--;
-					if (ans2[i] == '(')
-						sum2++;
-					else sum2--;
+					st2[i] = ')';
+					st1[i] = '(';
 				}
-			printf("YES\n");
-			cout << ans1 << endl << ans2 << endl;
+			}
 		}
+		cout << st1 << endl << st2 << endl;
 	}
 	return 0;
 }
