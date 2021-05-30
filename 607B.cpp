@@ -23,6 +23,15 @@ int main()
 	int n = read();
 	for (int i = 1; i <= n; i++)
 		a[i] = read();
-
+	for (int i = 1; i + 1 <= n; i++)
+		dp[i][i + 1] = 1;
+	for (int len = 2; len <= n; len++)
+	{
+		for (int i = 1; i + len <= n; i++)
+		{
+			int j = i + len;
+			if (a[i - 1])
+			}
+	}
 	return 0;
 }
