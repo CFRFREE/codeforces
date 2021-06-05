@@ -123,7 +123,7 @@ LL cal(string st)
 	//printf("%d\n", s);
 	if (v.size() == 1)return (s - 1);
 	if (v.size() == 2)return (s - 2);
-	return s + 3 - p * 2;
+	return s - p;
 }
 void work()
 {
